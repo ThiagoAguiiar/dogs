@@ -1,0 +1,7 @@
+{
+  "files.exclude": {
+    "public": true,
+    "package.json": true,
+    "package-lock.json": true
+  }
+}
