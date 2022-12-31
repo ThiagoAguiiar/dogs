@@ -6,6 +6,11 @@ const validation = {
     regex: /^\S+@\S+\.\S+$/,
     message: "Insira um email válido",
   },
+  password: {
+    regex: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/,
+    message:
+      "Senha de 8 dígitos: 1 letra maiúscula, 1 letra minúscula e um caractere especial",
+  },
 };
 
 // Hook useForm

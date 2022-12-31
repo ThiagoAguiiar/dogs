@@ -1,16 +1,19 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
-import { userContext } from '../../Context/UserContext'
-import {Navigate} from 'react-router-dom';
+import React from "react";
+import { Outlet } from "react-router-dom";
+import { userContext } from "../../Context/UserContext";
+import { Navigate } from "react-router-dom";
+import styles from "./Login.module.css";
 
 const Login = () => {
-  const {login} = React.useContext(userContext);
-  if (login === true) return <Navigate to='/conta' />
+  const { login } = React.useContext(userContext);
+  if (login === true) return <Navigate to="/conta" />;
   return (
-    <div>
-      <Outlet />
+    <div className={styles.login}>
+      <div className={styles.forms}>
+        <Outlet />
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
