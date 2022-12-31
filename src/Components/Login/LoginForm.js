@@ -1,52 +1,37 @@
 import React from "react";
+import Input from "../Forms/Input";
+import Button from "../Forms/Button";
+import useForm from "../../hooks/useForm";
 import { Link } from "react-router-dom";
+import { userContext } from "../../Context/UserContext";
 
 const LoginForm = () => {
-  const [user, setUser] = React.useState({
-    username: "",
-    password: "",
-  });
+  const username = useForm();
+  const password = useForm();
 
-  // Pegar valores do input
-  function handleChange({ target }) {
-    const { id, value } = target;
-    setUser({ ...user, [id]: value });
-  }
+  const { userLogin, error, loading } = React.useContext(userContext);
 
   // Fetch API
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
-    fetch("https://dogsapi.origamid.dev/json/jwt-auth/v1/token", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    })
-      .then((response) => console.log(response.json()))
-      .then((json) => console.log(json));
+    if (username.validate() && password.validate()) {
+      userLogin(username.value, password.value);
+    }
   }
 
   return (
-    <div>
-      <h1>Login</h1>
+    <div className="animeLeft">
+      <h1 className="title">Login</h1>
       <form action="" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={user.username}
-          id="username"
-          onChange={handleChange}
-        />
+        <Input label="Usuário" type="text" id="username" {...username} />
 
-        <input
-          type="password"
-          value={user.password}
-          id="password"
-          onChange={handleChange}
-        />
+        <Input label="Senha" type="password" id="password" {...password} />
 
-        <button type="submit">Login</button>
+        <Button disabled={loading ? true : false} type="submit">
+          {loading ? "Carregando..." : "Entrar"}
+        </Button>
+        {error && <p>{error}</p>}
         <Link to="criar">Cadastre-se</Link>
       </form>
     </div>
